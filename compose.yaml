@@ -49,6 +49,7 @@ services:
             - ./src:/app/src:ro
             - ./svg:/app/svg:ro
             - ./vendor:/app/vendor:ro
+            - avatars:/app/avatars
             - ./.env:/app/.env:ro
             - ./php/php.ini:/app/php.ini:ro
             - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
@@ -115,3 +116,5 @@ services:
 volumes:
     postgres:
         name: postgres
+    avatars:
+        name: avatars

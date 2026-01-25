@@ -9,7 +9,6 @@ enum AppError: string
     case PASSWORDS_NOT_MATCH = 'Passwords do not match';
     case WRONG_CODE = 'Your verification code is not valid';
     case EXPIRED = 'Verification code expired';
-    case INVALID_URL = 'The URL is not valid';
     case INVALID_IMAGE = 'The image you provided is not valid';
     case USERNAME_TOO_LONG = 'The username is too long';
     case CF_ERROR = 'Cloudflare verification error';

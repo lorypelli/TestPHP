@@ -5,29 +5,20 @@ if (strlen($username) > Constants::MAX_NAME_LENGTH) {
     redirect('/settings');
     exit(1);
 }
-$avatar = $_POST['avatar'] ?? '';
-if ($avatar) {
-    if (!filter_var($avatar, FILTER_VALIDATE_URL)) {
-        $_SESSION['error'] = 'invalid_url';
-        redirect('/settings');
-        exit(1);
-    }
-    $c = new GuzzleHttp\Client();
-    try {
-        $res = $c->get($avatar);
-        $header = $res->getHeaderLine('Content-Type');
-        if (!str_starts_with($header, 'image/')) {
-            $_SESSION['error'] = 'invalid_image';
-            redirect('/settings');
-            exit(1);
-        }
-    } catch (Exception) {
+$users->set_username($email, $username);
+$avatar = $_FILES['avatar'] ?? null;
+if ($avatar && !$avatar['error']) {
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $avatar_name = $avatar['tmp_name'];
+    $mime = $finfo->file($avatar_name);
+    if (!str_starts_with($mime, 'image/')) {
         $_SESSION['error'] = 'invalid_image';
         redirect('/settings');
         exit(1);
     }
+    $path = sprintf('/app/avatars/%s', $email);
+    $users->set_avatar($email, $path);
+    move_uploaded_file($avatar_name, $path);
 }
-$users->set_username($email, $username);
-$users->set_avatar($email, $avatar);
 session_destroy();
 redirect('/');
