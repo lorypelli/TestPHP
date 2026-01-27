@@ -10,4 +10,4 @@ $email = $_GET['email'] ?? '';
 $avatar = $email
     ? $users->get_avatar($email) ?? show_fallback_avatar()
     : show_fallback_avatar();
-echo file_get_contents($avatar);
+readfile($avatar);

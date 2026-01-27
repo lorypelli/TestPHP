@@ -9,4 +9,4 @@ header('Content-Type: image/gif');
 $users = new UserTable();
 $email = $cookies->get('email') ?? '';
 $avatar = $users->get_avatar($email) ?? show_fallback_avatar();
-echo file_get_contents($avatar);
+readfile($avatar);
