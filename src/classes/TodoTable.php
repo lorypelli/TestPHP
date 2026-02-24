@@ -77,7 +77,7 @@ final class TodoTable extends BaseConnection
      */
     public function get_all(string $user_id): array
     {
-        $res = $this->conn->prepare('SELECT * FROM todos WHERE user_id = ?');
+        $res = $this->conn->prepare('SELECT name, description, is_done FROM todos WHERE user_id = ?');
         $res->bindParam(1, $user_id);
         $res->execute();
         /**
