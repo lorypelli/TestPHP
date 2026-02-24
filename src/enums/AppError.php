@@ -18,6 +18,9 @@ enum AppError: string
 }
 
 return array_combine(
-    array_map(fn(AppError $c) => strtolower($c->name), AppError::cases()),
-    array_map(fn(AppError $c) => $c->value, AppError::cases()),
+    array_map(
+        fn(AppError $c): string => strtolower($c->name),
+        AppError::cases(),
+    ),
+    array_map(fn(AppError $c): string => $c->value, AppError::cases()),
 );

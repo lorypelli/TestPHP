@@ -8,14 +8,14 @@
     "type": "module",
     "devDependencies": {
         "@prettier/plugin-php": "^0.24.0",
-        "@tailwindcss/cli": "^4.1.18",
-        "@types/node": "^25.0.10",
-        "esbuild": "^0.27.2",
+        "@tailwindcss/cli": "^4.2.1",
+        "@types/node": "^25.3.0",
+        "esbuild": "^0.27.3",
         "is-docker": "^4.0.0",
         "prettier": "^3.8.1",
         "prettier-plugin-organize-imports": "^4.3.0",
         "tailwind-sorter": "^1.0.3",
-        "tailwindcss": "^4.1.18",
+        "tailwindcss": "^4.2.1",
         "tinyglobby": "^0.2.15"
     },
     "packageManager": "pnpm@10.6.5"

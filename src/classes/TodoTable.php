@@ -77,20 +77,20 @@ final class TodoTable extends BaseConnection
      */
     public function get_all(string $user_id): array
     {
-        $res = $this->conn->prepare('SELECT name, description, is_done FROM todos WHERE user_id = ?');
+        $res = $this->conn->prepare(
+            'SELECT name, description, is_done FROM todos WHERE user_id = ?',
+        );
         $res->bindParam(1, $user_id);
         $res->execute();
-        /**
-         * @var Todo[]
-         */
-        $arr = [];
-        $row = $res->fetchAll();
-        if ($row) {
-            foreach ($row as $r) {
-                $arr[] = new Todo($r->name, $r->description, $r->is_done);
-            }
-        }
-        return $arr;
+        $row = $res->fetchAll(
+            PDO::FETCH_FUNC,
+            fn(
+                string $name,
+                string $description,
+                bool $is_done,
+            ): Todo => new Todo($name, $description, $is_done),
+        );
+        return $row;
     }
     public function set(
         string $name,

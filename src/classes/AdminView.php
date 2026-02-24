@@ -21,20 +21,20 @@ final class AdminView extends BaseConnection
     public function get_all(): array
     {
         $res = $this->conn->query('SELECT * FROM admin');
-        /**
-         * @var Admin[]
-         */
-        $arr = [];
-        $row = $res->fetchAll();
-        if ($row) {
-            foreach ($row as $r) {
-                $arr[] = new Admin(
-                    $r->email,
-                    $r->username,
-                    new Todo($r->name, $r->description, $r->is_done),
-                );
-            }
-        }
-        return $arr;
+        $row = $res->fetchAll(
+            PDO::FETCH_FUNC,
+            fn(
+                string $email,
+                string $username,
+                string $name,
+                string $description,
+                bool $is_done,
+            ): Admin => new Admin(
+                $email,
+                $username,
+                new Todo($name, $description, $is_done),
+            ),
+        );
+        return $row;
     }
 }
