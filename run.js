@@ -10,7 +10,7 @@ if (!isDocker()) {
 }
 
 exec(
-    'pnpm tailwindcss -i ./src/styles/global.css -o ./assets/global.min.css -w -m',
+    'pnpm tailwindcss -i ./src/styles/global.css -o ./assets/global.min.css -m -w always',
 );
 
 exec('node esbuild.config.js');
