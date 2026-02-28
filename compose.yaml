@@ -51,7 +51,7 @@ services:
             - ./vendor:/app/vendor:ro
             - avatars:/app/avatars
             - ./.env:/app/.env:ro
-            - ./php/php.ini:/app/php.ini:ro
+            - ./php/config.ini:/app/php.ini:ro
             - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
         depends_on:
             - postgres
@@ -76,43 +76,9 @@ services:
         ports:
             - 63342:80
         volumes:
-            - ./varnish/default.vcl:/etc/varnish/default.vcl:ro
+            - ./varnish/config.vcl:/etc/varnish/default.vcl:ro
         depends_on:
             - php
-    prometheus:
-        container_name: prometheus
-        image: prom/prometheus:v3.4.0
-        restart: always
-        volumes:
-            - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml:ro
-        depends_on:
-            - php
-    grafana:
-        container_name: grafana
-        image: grafana/grafana:11.3.5
-        restart: always
-        volumes:
-            - ./grafana/provisioning.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
-        depends_on:
-            - nginx
-            - prometheus
-        environment:
-            GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: ${INITIALADMINDISABLED}
-            GF_AUTH_PROXY_ENABLED: ${AUTHPROXYENABLED}
-            GF_AUTH_PROXY_HEADER_NAME: ${AUTHPROXYHEADER}
-            GF_USERS_AUTO_ASSIGN_ORG_ROLE: ${ORGROLE}
-            GF_SERVER_ROOT_URL: ${ROOTURL}
-    cadvisor:
-        container_name: cadvisor
-        image: gcr.io/cadvisor/cadvisor:v0.52.0
-        restart: always
-        volumes:
-            - /:/rootfs:ro
-            - /var/run:/var/run:ro
-            - /sys:/sys:ro
-            - /var/lib/docker:/var/lib/docker:ro
-        depends_on:
-            - grafana
 volumes:
     postgres:
         name: postgres
