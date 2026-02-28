@@ -7,7 +7,6 @@
     encode zstd br gzip
 
     @static_files {
-        not path /admin/grafana/*
         path *.css *.js *.png *.ico
     }
 
@@ -45,18 +44,8 @@
 
     rewrite /admin /admin/index
 
-    rewrite /admin/grafana /admin/grafana/
-
-    rewrite /admin/grafana/avatar/* /favicon.ico
-
-    handle_path /admin/* {
-        handle_path /grafana/* {
-            reverse_proxy grafana:3000
-        }
-        
-        handle {
-            try_files /src/admin/{path}.php /src/errors/index.php?code=404
-        }
+    handle_path /admin/* {  
+        try_files /src/admin/{path}.php /src/errors/index.php?code=404
     }
 
     handle @not_found {
