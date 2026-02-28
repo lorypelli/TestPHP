@@ -44,7 +44,7 @@
 
     rewrite /admin /admin/index
 
-    handle_path /admin/* {  
+    handle_path /admin/* {
         try_files /src/admin/{path}.php /src/errors/index.php?code=404
     }
 
@@ -55,7 +55,7 @@
     handle @not_allowed {
         rewrite * /src/errors/index.php?code=405
     }
-    
+
     handle {
         rewrite * /src/router.php
     }
