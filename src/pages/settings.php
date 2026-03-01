@@ -11,7 +11,10 @@ $error = $_SESSION['error'] ?? '';
     $users->get_username($email),
 ) ?>" class="p-1 border-2 rounded-md" />
     <span>Avatar:</span>
-    <input name="avatar" type="file" accept="image/*" class="p-1 border-2 rounded-md cursor-pointer" />
+    <div class="flex gap-x-1">
+        <input name="avatar" type="file" accept="image/*" class="p-1 border-2 rounded-md cursor-pointer" />
+        <a href="/default"><button type="button" class="p-1 border-2 rounded-md cursor-pointer">Reset!</button></a>
+    </div>
     <span>Do you want to reset your password? You can <a href="/reset" class="text-blue-600 hover:underline">do it
             here</a>!</span>
     <span>Do you want to change your email? You can <a href="/change" class="text-blue-600 hover:underline">do it

@@ -17,6 +17,10 @@ return [
     ),
     'remove' => new Page(
         'Remove a Todo',
-        'Are you sure you want to remove this todo?',
+        'Are you sure you want to remove the todo?',
+    ),
+    'default' => new Page(
+        'Reset to Default Avatar',
+        'Are you sure you want to reset your avatar to the default one?',
     ),
 ];
