@@ -79,8 +79,23 @@ services:
             - ./varnish/config.vcl:/etc/varnish/default.vcl:ro
         depends_on:
             - php
+    pgadmin:
+        container_name: pgadmin
+        image: dpage/pgadmin4:9.4.0
+        restart: always
+        volumes:
+            - pgadmin:/var/lib/pgadmin
+            - ./pgadmin/config.py:/pgadmin4/config_local.py
+        environment:
+            SCRIPT_NAME: /admin/postgres
+            PGADMIN_DEFAULT_EMAIL: admin@example.com
+            PGADMIN_DEFAULT_PASSWORD: admin
+        depends_on:
+            - php
 volumes:
     postgres:
         name: postgres
     avatars:
         name: avatars
+    pgadmin:
+        name: pgadmin

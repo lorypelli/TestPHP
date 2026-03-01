@@ -6,6 +6,16 @@
     root * /app
     encode zstd br gzip
 
+    @not_admin {
+        path /admin/*
+        not header X-Auth 1
+    }
+
+    @pgadmin {
+        header X-Auth 1
+        path /admin/postgres/*
+    }
+
     @static_files {
         path *.css *.js *.png *.ico
     }
@@ -21,13 +31,20 @@
         not method POST
     }
 
-    @not_admin {
-        path /admin/*
-        not header X-Auth 1
-    }
-
     php_server {
         root /app
+    }
+
+    rewrite /admin /admin/index
+
+    rewrite /admin/postgres /admin/postgres/
+
+    handle @not_admin {
+        reverse_proxy nginx
+    }
+
+    handle @pgadmin {
+        reverse_proxy pgadmin
     }
 
     handle @static_files {
@@ -37,12 +54,6 @@
     handle_path /avatar {
         rewrite * /src/avatar/index.php
     }
-
-    handle @not_admin {
-        reverse_proxy nginx
-    }
-
-    rewrite /admin /admin/index
 
     handle_path /admin/* {
         try_files /src/admin/{path}.php /src/errors/index.php?code=404
