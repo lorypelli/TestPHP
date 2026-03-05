@@ -9,8 +9,8 @@ function is_api_key_valid(): bool
     }
     try {
         $resend->emails->send([
-            'from' => $_ENV['EMAIL'],
-            'to' => $_ENV['EMAIL'],
+            'from' => $email,
+            'to' => $email,
             'subject' => 'Test',
             'text' => 'Test',
         ]);

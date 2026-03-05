@@ -1,10 +1,8 @@
 <?php
-require_once sprintf('%s/src/utils/is_api_key_valid.php', $root);
 function send_email(string $email, string $code, string $action): void
 {
-    global $resend, $is_valid_email;
+    global $resend;
     if (!is_api_key_valid()) {
-        $is_valid_email = false;
         return;
     }
     try {

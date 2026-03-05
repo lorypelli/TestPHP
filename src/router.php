@@ -5,6 +5,7 @@ require_once sprintf('%s/vendor/autoload.php', $root);
 require_once sprintf('%s/src/utils/redirect.php', $root);
 require_once sprintf('%s/src/classes/UserTable.php', $root);
 require_once sprintf('%s/src/classes/TodoTable.php', $root);
+require_once sprintf('%s/src/utils/is_api_key_valid.php', $root);
 $cookies = require_once sprintf('%s/src/cookies/index.php', $root);
 Dotenv\Dotenv::createImmutable($root)->load();
 $resend = Resend::client($_ENV['APIKEY']);
@@ -13,7 +14,7 @@ $file = trim($url_path, '/') ?: 'index';
 $users = new UserTable();
 $todos = new TodoTable();
 $is_valid_todo = $todos->check($file);
-$is_valid_email = true;
+$is_valid_email = is_api_key_valid();
 if ($is_valid_todo) {
     $todo_id = $file;
     $file = 'index';

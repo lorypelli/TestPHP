@@ -1,5 +1,4 @@
 <?php
-require_once sprintf('%s/src/utils/is_api_key_valid.php', $root);
 $messages = require_once sprintf('%s/src/enums/AppError.php', $root);
 $error = $_SESSION['error'] ?? '';
 $email = $_SESSION['email'] ?? '';
@@ -37,4 +36,3 @@ if (!$email || !$code) {
     <button type="submit" class="p-1 border-2 rounded-md cursor-pointer">Verify!</button>
     <script src="/input.min.js" defer></script>
 </form>
-<?php $is_valid_email = true; ?>
