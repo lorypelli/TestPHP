@@ -63,7 +63,6 @@ services:
             dockerfile: nginx/Dockerfile
         volumes:
             - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-            - ./htpasswd/htpasswd.sh:/htpasswd.sh:ro
             - ./htpasswd/.htpasswd:/etc/nginx/.htpasswd
         depends_on:
             - php
