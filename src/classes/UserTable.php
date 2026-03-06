@@ -14,11 +14,15 @@ final class UserTable extends BaseConnection
                     email VARCHAR(%d) UNIQUE NOT NULL,
                     password VARCHAR(%d) NOT NULL,
                     username VARCHAR(%d) NOT NULL,
-                    avatar TEXT NOT NULL DEFAULT ''
+                    avatar TEXT NOT NULL DEFAULT '',
+                    created_at TIMESTAMPZ NOT NULL DEFAULT NOW(),
+                    verified_at TIMESTAMPZ DEFAULT NULL,
+                    verification_code VARCHAR(%d) NOT NULL DEFAULT ''
                 )",
                 Constants::MAX_EMAIL_LENGTH,
                 Constants::MAX_PASSWORD_LENGTH,
                 Constants::MAX_NAME_LENGTH,
+                Constants::MAX_CODE_LENGTH,
             ),
         );
     }
@@ -91,6 +95,42 @@ final class UserTable extends BaseConnection
         $row = $res->fetch();
         return $row ? $row->avatar : '';
     }
+    public function get_verification_code(string $email): string
+    {
+        $res = $this->conn->prepare(
+            'SELECT verification_code FROM users WHERE email = ?',
+        );
+        $res->bindParam(1, $email);
+        $res->execute();
+        $row = $res->fetch();
+        return $row ? $row->verification_code : '';
+    }
+    public function get_created_at(string $email): ?DateTimeImmutable
+    {
+        $res = $this->conn->prepare(
+            'SELECT created_at FROM users WHERE email = ?',
+        );
+        $res->bindParam(1, $email);
+        $res->execute();
+        $row = $res->fetch();
+        if ($row?->created_at) {
+            return new DateTimeImmutable($row->created_at);
+        }
+        return null;
+    }
+    public function get_verified_at(string $email): ?DateTimeImmutable
+    {
+        $res = $this->conn->prepare(
+            'SELECT verified_at FROM users WHERE email = ?',
+        );
+        $res->bindParam(1, $email);
+        $res->execute();
+        $row = $res->fetch();
+        if ($row?->verified_at) {
+            return new DateTimeImmutable($row->verified_at);
+        }
+        return null;
+    }
     public function set_username(string $email, string $username): void
     {
         $res = $this->conn->prepare(
@@ -118,6 +158,24 @@ final class UserTable extends BaseConnection
         $res->bindParam(2, $email);
         $res->execute();
     }
+    public function set_verification_code(string $email, string $code): void
+    {
+        $res = $this->conn->prepare(
+            'UPDATE users SET verification_code = ? WHERE email = ?',
+        );
+        $res->bindParam(1, $code);
+        $res->bindParam(2, $email);
+        $res->execute();
+    }
+    private function set_verified_at(string $email, string $verified_at): void
+    {
+        $res = $this->conn->prepare(
+            'UPDATE users SET verified_at = ? WHERE email = ?',
+        );
+        $res->bindParam(1, $verified_at);
+        $res->bindParam(2, $email);
+        $res->execute();
+    }
     public function set_email(string $old_email, string $email): void
     {
         $res = $this->conn->prepare(
@@ -126,6 +184,11 @@ final class UserTable extends BaseConnection
         $res->bindParam(1, $email);
         $res->bindParam(2, $old_email);
         $res->execute();
+    }
+    public function verify(string $email): void
+    {
+        $this->set_verified_at($email, 'NOW()');
+        $this->set_verification_code($email, '');
     }
     public function delete(string $email): void
     {

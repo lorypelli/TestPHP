@@ -1,11 +1,7 @@
 <?php
 $email = $_SESSION['email'] ?? '';
 $type = $_SESSION['type'] ?? 'register';
-if ($type == 'register') {
-    $password = $_SESSION['password'] ?? '';
-    $username = $_SESSION['username'] ?? '';
-}
-if (!$email || ($type == 'register' && (!$password || !$username))) {
+if (!$email) {
     $_SESSION['error'] = 'expired';
     redirect('/verify', 307);
     exit(1);
@@ -19,9 +15,18 @@ if ($user_code != $server_code) {
     exit(1);
 }
 match ($type) {
-    'register' => (function () use ($email, $password, $username): void {
+    'register' => (function () use ($email): void {
         global $users;
-        $users->new($email, $password, $username);
+        $now = new DateTimeImmutable();
+        $created_at = $users->get_created_at($email);
+        if ($now->getTimestamp() - $created_at->getTimestamp() < 15 * 60) {
+            $users->verify($email);
+        } else {
+            $_SESSION['error'] = 'expired';
+            $users->delete($email);
+            redirect('/register');
+            exit(1);
+        }
         session_destroy();
         redirect('/login');
     })(),

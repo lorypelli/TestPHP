@@ -1,4 +1,5 @@
 <?php
+require_once sprintf('%s//src/utils/generate_code.php', $root);
 require_once sprintf('%s/src/utils/send_email.php', $root);
 require_once sprintf('%s/src/utils/turnstile.php', $root);
 turnstile('register');
@@ -27,10 +28,10 @@ if (strlen($username) > Constants::MAX_NAME_LENGTH) {
     redirect('/register');
     exit(1);
 }
-$code = mt_rand(100000, 999999);
+$users->new($email, $hash, $username);
+$code = generate_code();
+$users->set_verification_code($email, $code);
 $_SESSION['email'] = $email;
-$_SESSION['password'] = $hash;
-$_SESSION['username'] = $username;
 $_SESSION['code'] = $code;
 $_SESSION['type'] = 'register';
 send_email($email, $code, 'register');

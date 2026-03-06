@@ -2,8 +2,10 @@
 $messages = require_once sprintf('%s/src/enums/AppError.php', $root);
 $error = $_SESSION['error'] ?? '';
 $email = $_SESSION['email'] ?? '';
-$code = $_SESSION['code'] ?? '';
-if (!$email || !$code) {
+if (!$is_valid_email) {
+    $code = $_SESSION['code'] ?? '';
+}
+if (!$email) {
     redirect('/');
 }
 ?>

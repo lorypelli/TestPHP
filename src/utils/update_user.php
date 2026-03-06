@@ -1,4 +1,5 @@
 <?php
+require_once sprintf('%s//src/utils/generate_code.php', $root);
 require_once sprintf('%s/src/utils/send_email.php', $root);
 function update_user(string $action): void
 {
@@ -14,7 +15,7 @@ function update_user(string $action): void
         redirect(sprintf('/%s', $action));
         exit(1);
     }
-    $code = mt_rand(100000, 999999);
+    $code = generate_code();
     $_SESSION['email'] = $email;
     $_SESSION['code'] = $code;
     $_SESSION['type'] = $action;

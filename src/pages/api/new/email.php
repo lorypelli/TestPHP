@@ -1,4 +1,5 @@
 <?php
+require_once sprintf('%s//src/utils/generate_code.php', $root);
 require_once sprintf('%s/src/utils/send_email.php', $root);
 $is_confirm = isset($_GET['confirm']);
 $session_email = !$is_confirm ? $_SESSION['email'] : $_SESSION['old_email'];
@@ -20,7 +21,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit(1);
 }
 if (!$is_confirm) {
-    $code = mt_rand(100000, 999999);
+    $code = generate_code();
     $_SESSION['old_email'] = $session_email;
     $_SESSION['email'] = $email;
     $_SESSION['code'] = $code;

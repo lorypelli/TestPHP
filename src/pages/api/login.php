@@ -18,6 +18,13 @@ if (!$users->check($email, $password)) {
     redirect('/login');
     exit(1);
 }
+if (!$users->get_verified_at($email)) {
+    $_SESSION['email'] = $email;
+    $_SESSION['code'] = $users->get_verification_code($email);
+    $_SESSION['type'] = 'login';
+    redirect('/verify', 307);
+    exit(0);
+}
 $user = $users->get($email, $password);
 if ($user) {
     $cookies->set('email', $user->get_email());
