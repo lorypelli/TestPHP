@@ -21,7 +21,7 @@ if (!$users->check($email, $password)) {
 if (!$users->get_verified_at($email)) {
     $_SESSION['email'] = $email;
     $_SESSION['code'] = $users->get_verification_code($email);
-    $_SESSION['type'] = 'login';
+    $_SESSION['type'] = 'register';
     redirect('/verify', 307);
     exit(0);
 }
