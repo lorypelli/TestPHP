@@ -1,9 +1,12 @@
 <?php
 $messages = require_once sprintf('%s/src/enums/AppError.php', $root);
+$is_post = isset($_POST['email']);
 $error = $_SESSION['error'] ?? '';
-$email = $_SESSION['email'] ?? '';
+$email = $_SESSION['email'] ?? ($_POST['email'] ?? '');
 if (!$is_valid_email) {
     $code = $_SESSION['code'] ?? '';
+} elseif ($is_post) {
+    $code = $_POST['code'] ?? '';
 }
 if (!$email) {
     redirect('/');
