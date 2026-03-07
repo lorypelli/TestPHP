@@ -55,6 +55,12 @@ services:
             - postgres
             - pnpm
             - composer
+    golang:
+        container_name: golang
+        image: golang:1.23.10-alpine3.21
+        restart: always
+        depends_on:
+            - php
     nginx:
         container_name: nginx
         restart: always
