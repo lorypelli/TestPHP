@@ -37,7 +37,7 @@
 
     rewrite /admin /admin/index
 
-    rewrite /admin/postgres /admin/postgres/
+    rewrite /admin/postgres /admin/postgres/browser/
 
     handle @not_admin {
         reverse_proxy nginx
