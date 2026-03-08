@@ -59,8 +59,14 @@ services:
         container_name: golang
         image: golang:1.23.10-alpine3.21
         restart: always
+        working_dir: /app
+        volumes:
+            - ./go.mod:/app/go.mod:ro
+            - ./go.sum:/app/go.sum:ro
+            - ./golang/src/main.go:/app/src/main.go:ro
         depends_on:
             - php
+        command: sh -c "go get ./... && go run src/main.go"
     nginx:
         container_name: nginx
         restart: always

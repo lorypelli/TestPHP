@@ -51,6 +51,10 @@
         try_files /public/{path} /src/errors/index.php?code=404
     }
 
+    handle_path /verify/* {
+        reverse_proxy go
+    }
+
     handle_path /avatar {
         rewrite * /src/avatar/index.php
     }

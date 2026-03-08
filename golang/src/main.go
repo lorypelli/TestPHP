@@ -41,12 +41,16 @@ func main() {
 					req.Header.SetContentType("application/x-www-form-urlencoded")
 					if err := client.Do(req, res); err == nil {
 						res.CopyTo(&ctx.Response)
+						return
 					}
 					ctx.Error("Bad Request!", fasthttp.StatusBadRequest)
+					return
 				}
 				ctx.Error("Bad Request!", fasthttp.StatusBadRequest)
+				return
 			}
 			ctx.Error("Bad Request!", fasthttp.StatusBadRequest)
+			return
 		}
 		ctx.Error("Bad Request!", fasthttp.StatusBadRequest)
 	}
