@@ -2,6 +2,7 @@
     "scripts": {
         "dev": "node run.js",
         "format": "pnpm \"/format:.*/\"",
+        "format:golang": "go fmt ./golang/src",
         "format:prettier": "prettier --write .",
         "format:sort": "tailwind-sorter sort -i \"./src/**/*.php\""
     },
