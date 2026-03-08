@@ -12,9 +12,9 @@ import (
 )
 
 type Response struct {
-	id    string
-	email string
-	code  string
+	UserID string `json:"id"`
+	Email  string `json:"email"`
+	Code   string `json:"code"`
 }
 
 func main() {
@@ -28,16 +28,20 @@ func main() {
 	server.Handler = func(ctx *fasthttp.RequestCtx) {
 		path := string(ctx.Path())
 		bytes, err := base64.StdEncoding.DecodeString(path[1:])
+		fmt.Println(path[1:], string(bytes))
 		if err == nil {
-			if err := json.Unmarshal(bytes, &response); err != nil {
-				isValidUUID := regexp.MustCompile(`^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$`).MatchString(response.code)
-				isValidEmail := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`).MatchString(response.email)
-				isValidCode := regexp.MustCompile(`^\d{6}$`).MatchString(response.code)
+			if err := json.Unmarshal(bytes, &response); err == nil {
+				userID := response.UserID
+				email := response.Email
+				code := response.Code
+				isValidUUID := regexp.MustCompile(`^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$`).MatchString(userID)
+				isValidEmail := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`).MatchString(email)
+				isValidCode := regexp.MustCompile(`^\d{6}$`).MatchString(code)
 				if isValidUUID && isValidEmail && isValidCode {
 					ctx.Request.CopyTo(req)
 					req.Header.SetMethod(fasthttp.MethodPost)
 					req.SetRequestURI("http://php/verify")
-					req.SetBodyString(fmt.Sprintf("user_id=%s&email=%s&code=%s", response.id, response.email, response.code))
+					req.SetBodyString(fmt.Sprintf("id=%s&email=%s&code=%s", userID, email, code))
 					req.Header.SetContentType("application/x-www-form-urlencoded")
 					if err := client.Do(req, res); err == nil {
 						res.CopyTo(&ctx.Response)
