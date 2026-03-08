@@ -14,6 +14,9 @@ if (!$email) {
     redirect('/');
 }
 ?>
+<?php if ($is_post): ?>
+    <script>history.pushState(null, '', '/verify');</script>
+<?php endif; ?>
 <form method="POST" class="flex flex-col justify-center items-center gap-y-1 h-screen" action="/api/verify">
     <?php if (isset($messages[$error])): ?>
         <?php include_once sprintf('%s/src/components/Error.php', $root); ?>
