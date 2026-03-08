@@ -15,8 +15,8 @@ final class UserTable extends BaseConnection
                     password VARCHAR(%d) NOT NULL,
                     username VARCHAR(%d) NOT NULL,
                     avatar TEXT NOT NULL DEFAULT '',
-                    created_at TIMESTAMPZ NOT NULL DEFAULT NOW(),
-                    verified_at TIMESTAMPZ DEFAULT NULL,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                    verified_at TIMESTAMPTZ DEFAULT NULL,
                     verification_code VARCHAR(%d) NOT NULL DEFAULT ''
                 )",
                 Constants::MAX_EMAIL_LENGTH,
