@@ -43,16 +43,16 @@ func main() {
 						res.CopyTo(&ctx.Response)
 						return
 					}
-					ctx.Error("Bad Request!", fasthttp.StatusBadRequest)
+					ctx.Redirect("/login", fasthttp.StatusFound)
 					return
 				}
-				ctx.Error("Bad Request!", fasthttp.StatusBadRequest)
+				ctx.Redirect("/login", fasthttp.StatusFound)
 				return
 			}
-			ctx.Error("Bad Request!", fasthttp.StatusBadRequest)
+			ctx.Redirect("/login", fasthttp.StatusFound)
 			return
 		}
-		ctx.Error("Bad Request!", fasthttp.StatusBadRequest)
+		ctx.Redirect("/login", fasthttp.StatusFound)
 	}
 	preforkServer := prefork.New(&server)
 	if err := preforkServer.ListenAndServe(":80"); err != nil {

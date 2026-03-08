@@ -52,7 +52,7 @@
     }
 
     handle_path /verify/* {
-        reverse_proxy go
+        reverse_proxy golang
     }
 
     handle_path /avatar {
