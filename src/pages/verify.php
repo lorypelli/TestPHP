@@ -4,14 +4,20 @@ $messages = require_once sprintf('%s/src/enums/AppError.php', $root);
 $is_post = isset($_POST['id']);
 $error = $_SESSION['error'] ?? '';
 $email = $_SESSION['email'] ?? ($_POST['email'] ?? '');
+if (!$email) {
+    redirect('/');
+    exit(1);
+} elseif ($users->get_verified_at($email)) {
+    redirect('/login');
+    exit(0);
+}
 if (!$is_post) {
     $code = $_SESSION['code'] ?? '';
     send_email($email, $code, 'register');
 } else {
     $code = $_POST['code'] ?? '';
-}
-if (!$email) {
-    redirect('/');
+    $_SESSION['email'] = $email;
+    $_SESSION['code'] = $code;
 }
 ?>
 <?php if ($is_post): ?>
