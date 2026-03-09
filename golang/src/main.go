@@ -69,6 +69,7 @@ func main() {
 		ctx.Redirect("/login", fasthttp.StatusFound)
 	}
 	preforkServer := prefork.New(server)
+	preforkServer.Reuseport = true
 	if err := preforkServer.ListenAndServe(":80"); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
