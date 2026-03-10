@@ -3,8 +3,8 @@ require_once sprintf('%s/src/utils/send_email.php', $root);
 $messages = require_once sprintf('%s/src/enums/AppError.php', $root);
 $is_post = isset($_POST['id']);
 $error = $_SESSION['error'] ?? '';
-$email = $_SESSION['email'] ?? ($_POST['email'] ?? '');
-if (!$email) {
+$email = $_POST['email'] ?? ($_SESSION['email'] ?? '');
+if (!$email || $users->check_email($email)) {
     redirect('/');
     exit(1);
 } elseif ($users->get_verified_at($email)) {
@@ -15,6 +15,11 @@ if (!$is_post) {
     $code = $_SESSION['code'] ?? '';
     send_email($email, $code, 'register');
 } else {
+    $id = $_POST['id'];
+    if ($id != $users->get_id($email)) {
+        redirect('/');
+        exit(1);
+    }
     $code = $_POST['code'] ?? '';
     $_SESSION['email'] = $email;
     $_SESSION['code'] = $code;

@@ -1,7 +1,7 @@
 <?php
 $email = $_SESSION['email'] ?? '';
 $type = $_SESSION['type'] ?? 'register';
-if (!$email) {
+if (!$email || !$users->check_email($email)) {
     $_SESSION['error'] = 'expired';
     redirect('/verify', 307);
     exit(1);

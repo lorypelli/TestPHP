@@ -112,7 +112,7 @@ final class UserTable extends BaseConnection
         );
         $res->bindParam(1, $email);
         $res->execute();
-        $row = $res->fetch();
+        $row = $res->fetch() ?: null;
         if ($row?->created_at) {
             return new DateTimeImmutable($row->created_at);
         }
@@ -125,7 +125,7 @@ final class UserTable extends BaseConnection
         );
         $res->bindParam(1, $email);
         $res->execute();
-        $row = $res->fetch();
+        $row = $res->fetch() ?: null;
         if ($row?->verified_at) {
             return new DateTimeImmutable($row->verified_at);
         }
