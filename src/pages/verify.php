@@ -4,7 +4,8 @@ $messages = require_once sprintf('%s/src/enums/AppError.php', $root);
 $is_post = isset($_POST['id']);
 $error = $_SESSION['error'] ?? '';
 $email = $_POST['email'] ?? ($_SESSION['email'] ?? '');
-if (!$email || $users->check_email($email)) {
+$is_email = filter_var($email, FILTER_VALIDATE_EMAIL);
+if (!$is_email || !$users->check_email($email)) {
     redirect('/');
     exit(1);
 } elseif ($users->get_verified_at($email)) {

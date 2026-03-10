@@ -1,8 +1,13 @@
 <?php
 $email = $_SESSION['email'] ?? '';
 $type = $_SESSION['type'] ?? 'register';
-if (!$email || !$users->check_email($email)) {
-    $_SESSION['error'] = 'expired';
+$is_email = filter_var($email, FILTER_VALIDATE_EMAIL);
+if (!$is_email) {
+    $_SESSION['error'] = 'invalid_email';
+    redirect('/verify', 307);
+    exit(1);
+} elseif (!$users->check_email($email)) {
+    $_SESSION['error'] = 'not_found';
     redirect('/verify', 307);
     exit(1);
 }
