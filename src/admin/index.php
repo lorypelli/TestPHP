@@ -18,6 +18,7 @@ ob_start(buffer(...));
             <th>Avatar</th>
             <th>Email</th>
             <th>Username</th>
+            <th>Is Verified</th>
             <th>Todo Name</th>
             <th>Todo Description</th>
             <th>Todo IsDone</th>
@@ -37,6 +38,13 @@ ob_start(buffer(...));
                     <td>
                         <input autocomplete="off" readonly value="<?= $a->get_username() ?>"
                             class="focus:outline-none w-[20vw] text-center cursor-not-allowed" />
+                    </td>
+                    <td>
+                        <input type="checkbox" disabled <?= htmlspecialchars(
+                            $a->get_is_verified(),
+                        )
+                            ? 'checked'
+                            : '' ?> class="after:flex after:justify-center bg-red-600 checked:bg-blue-600 border-2 rounded-md focus:outline-none size-7 after:text-white after:content-['✕'] checked:after:content-['✓'] appearance-none cursor-not-allowed" />
                     </td>
                     <td>
                         <input autocomplete="off" readonly value="<?= $t->get_name() ?>"
