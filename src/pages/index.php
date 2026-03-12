@@ -1,4 +1,5 @@
 <?php
+require_once sprintf('%s/src/utils/when.php', $root);
 $messages = require_once sprintf('%s/src/enums/AppError.php', $root);
 $error = $_SESSION['error'] ?? '';
 $user_id = $email ? $users->get_id($email) : '';
@@ -17,15 +18,14 @@ $user_id = $email ? $users->get_id($email) : '';
             $name = htmlspecialchars($t->get_name());
             $id = htmlspecialchars($todos->get_id($user_id, $name));
             ?>
-            <form <?= $id ? sprintf('data-todo="%s"', $id) : '' ?> method="POST"
+            <form <?= when($id, sprintf('data-todo="%s"', $id)) ?> method="POST"
                 class="flex justify-center items-center gap-x-2 sm:gap-x-4 md:gap-x-8 lg:gap-x-12 2xl:gap-x-20 xl:gap-x-16 cursor-not-allowed"
                 action="/api/remove">
                 <span class="font-bold">Done:</span>
-                <input name="is_done" type="checkbox" disabled <?= htmlspecialchars(
+                <input name="is_done" type="checkbox" disabled <?= when(
                     $t->get_is_done(),
-                )
-                    ? 'checked'
-                    : '' ?> class="after:flex after:justify-center bg-red-600 checked:bg-blue-600 border-2 rounded-md focus:outline-none size-7 after:text-white after:content-['✕'] checked:after:content-['✓'] appearance-none cursor-not-allowed" />
+                    'checked',
+                ) ?> class="after:flex after:justify-center bg-red-600 checked:bg-blue-600 border-2 rounded-md focus:outline-none size-7 after:text-white after:content-['✕'] checked:after:content-['✓'] appearance-none cursor-not-allowed" />
                 <span class="font-bold">Name:</span>
                 <input name="name" autocomplete="off" readonly value="<?= $name ?>"
                     class="focus:outline-none w-[20vw] text-center cursor-not-allowed" />

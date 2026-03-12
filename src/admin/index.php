@@ -3,6 +3,7 @@ $root = $_SERVER['DOCUMENT_ROOT'];
 require_once sprintf('%s/vendor/autoload.php', $root);
 require_once sprintf('%s/src/classes/AdminView.php', $root);
 require_once sprintf('%s/src/utils/buffer.php', $root);
+require_once sprintf('%s/src/utils/when.php', $root);
 Dotenv\Dotenv::createImmutable($root)->load();
 $admin = new AdminView();
 ob_start(buffer(...));
@@ -40,11 +41,10 @@ ob_start(buffer(...));
                             class="focus:outline-none w-[20vw] text-center cursor-not-allowed" />
                     </td>
                     <td>
-                        <input type="checkbox" disabled <?= htmlspecialchars(
+                        <input type="checkbox" disabled <?= when(
                             $a->get_is_verified(),
-                        )
-                            ? 'checked'
-                            : '' ?> class="after:flex after:justify-center bg-red-600 checked:bg-blue-600 border-2 rounded-md focus:outline-none size-7 after:text-white after:content-['✕'] checked:after:content-['✓'] appearance-none cursor-not-allowed" />
+                            'checked',
+                        ) ?> class="after:flex after:justify-center bg-red-600 checked:bg-blue-600 border-2 rounded-md focus:outline-none size-7 after:text-white after:content-['✕'] checked:after:content-['✓'] appearance-none cursor-not-allowed" />
                     </td>
                     <td>
                         <input autocomplete="off" readonly value="<?= $t->get_name() ?>"
@@ -55,11 +55,10 @@ ob_start(buffer(...));
                             class="focus:outline-none w-[20vw] text-center cursor-not-allowed" />
                     </td>
                     <td>
-                        <input type="checkbox" disabled <?= htmlspecialchars(
+                        <input type="checkbox" disabled <?= when(
                             $t->get_is_done(),
-                        )
-                            ? 'checked'
-                            : '' ?> class="after:flex after:justify-center bg-red-600 checked:bg-blue-600 border-2 rounded-md focus:outline-none size-7 after:text-white after:content-['✕'] checked:after:content-['✓'] appearance-none cursor-not-allowed" />
+                            'checked',
+                        ) ?> class="after:flex after:justify-center bg-red-600 checked:bg-blue-600 border-2 rounded-md focus:outline-none size-7 after:text-white after:content-['✕'] checked:after:content-['✓'] appearance-none cursor-not-allowed" />
                     </td>
                 </tr>
             <?php endforeach; ?>
