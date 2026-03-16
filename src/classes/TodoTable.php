@@ -11,7 +11,7 @@ final class TodoTable extends BaseConnection
             sprintf(
                 "CREATE TABLE IF NOT EXISTS todos (
                     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                    user_id UUID,
+                    user_id UUID NOT NULL,
                     name VARCHAR(%d) UNIQUE NOT NULL,
                     description VARCHAR(%d) NOT NULL,
                     is_done BOOLEAN NOT NULL DEFAULT FALSE,
