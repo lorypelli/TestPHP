@@ -71,7 +71,10 @@ func main() {
 	preforkServer := prefork.New(server)
 	preforkServer.Reuseport = true
 	if err := preforkServer.ListenAndServe(":80"); err != nil {
-		fmt.Println(err)
+		fmt.Printf(
+			"\x1b[1;31m[ERROR]\x1b[0m An error occurred: %q!\n",
+			err,
+		)
 		os.Exit(1)
 	}
 }

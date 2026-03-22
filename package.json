@@ -4,7 +4,8 @@
         "format": "pnpm \"/format:.*/\"",
         "format:golang": "go fmt ./golang/src",
         "format:prettier": "prettier --write .",
-        "format:sort": "tailwind-sorter sort -i \"./src/**/*.php\""
+        "format:sort": "tailwind-sorter sort -i \"./src/**/*.php\"",
+        "go": "go run ./golang/src"
     },
     "type": "module",
     "devDependencies": {
