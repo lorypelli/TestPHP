@@ -1,0 +1,10 @@
+{
+    "code-runner.runInTerminal": true,
+    "code-runner.ignoreSelection": true,
+    "code-runner.executorMapByGlob": {
+        "setup.py": "python3 setup.py #",
+        "run.js": "node run.js #",
+        "main.go": "go run ./golang/src #",
+        "*": "make #"
+    }
+}
