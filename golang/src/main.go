@@ -28,8 +28,7 @@ func main() {
 	client := &fasthttp.Client{}
 	server.Handler = func(ctx *fasthttp.RequestCtx) {
 		path := string(ctx.Path())
-		bytes, err := base64.StdEncoding.DecodeString(path[1:])
-		if err == nil {
+		if bytes, err := base64.StdEncoding.DecodeString(path[1:]); err == nil {
 			response := &Response{}
 			if err := json.Unmarshal(bytes, response); err == nil {
 				userID := response.UserID
