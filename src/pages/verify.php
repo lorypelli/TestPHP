@@ -33,12 +33,12 @@ if (!$is_post) {
     <?php if (isset($messages[$error])): ?>
         <?php include_once sprintf('%s/src/components/Error.php', $root); ?>
     <?php endif; ?>
-    <span data-code class="font-bold text-xl text-center">A verification code has been sent to <?= htmlspecialchars(
+    <span data-sent class="font-bold text-xl text-center">A verification code has been sent to <?= htmlspecialchars(
         $email,
     ) ?>!</span>
     <?php if (!$is_valid_email): ?>
         <style>
-            [data-code] {
+            [data-sent] {
                 text-decoration: line-through;
             }
         </style>
