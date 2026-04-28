@@ -1,5 +1,5 @@
 <?php
-require_once sprintf('%s//src/utils/generate_code.php', $root);
+require_once sprintf('%s/src/utils/generate_code.php', $root);
 require_once sprintf('%s/src/utils/send_email.php', $root);
 function update_user(string $action): void
 {

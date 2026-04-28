@@ -25,7 +25,7 @@ final class Admin
     {
         return $this->username;
     }
-    public function get_is_verified(): string
+    public function get_is_verified(): bool
     {
         return $this->is_verified;
     }
