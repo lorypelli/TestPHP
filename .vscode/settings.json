@@ -6,5 +6,6 @@
         "run.js": "node run.js #",
         "main.go": "go run ./golang/src #",
         "*": "make #"
-    }
+    },
+    "php.version": "8.4"
 }
