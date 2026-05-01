@@ -7,6 +7,7 @@ enum AppError: string
     case INCORRECT_PASSWORD = 'The user exists but the password is not correct';
     case EMAILS_NOT_MATCH = 'Emails do not match';
     case PASSWORDS_NOT_MATCH = 'Passwords do not match';
+    case PASSWORD_TOO_LONG = 'The password is too long';
     case WRONG_CODE = 'Your verification code is not valid';
     case EXPIRED = 'Verification code expired';
     case INVALID_IMAGE = 'The image you provided is not valid';

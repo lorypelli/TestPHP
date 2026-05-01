@@ -14,7 +14,7 @@ if (!$is_email) {
 $code = $_POST['digit'] ?? [];
 $user_code = implode('', $code);
 $server_code = $_SESSION['code'] ?? '';
-if ($user_code != $server_code) {
+if (!hash_equals($server_code, $user_code)) {
     $_SESSION['error'] = 'wrong_code';
     redirect('/verify', 307);
     exit(1);

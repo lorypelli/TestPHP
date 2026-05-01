@@ -12,6 +12,11 @@ if ($password != $repeat_password) {
     redirect('/new/password', 307);
     exit(1);
 }
+if (strlen($password) > 72) {
+    $_SESSION['error'] = 'password_too_long';
+    redirect('/new/password', 307);
+    exit(1);
+}
 $hash = password_hash($password, PASSWORD_BCRYPT);
 $users->set_password($email, $hash);
 session_destroy();

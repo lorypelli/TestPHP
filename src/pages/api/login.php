@@ -27,6 +27,7 @@ if (!$users->get_verified_at($email)) {
 }
 $user = $users->get($email, $password);
 if ($user) {
+    session_regenerate_id(true);
     $cookies->set('email', $user->get_email());
     $cookies->set('password', $user->get_password());
 }

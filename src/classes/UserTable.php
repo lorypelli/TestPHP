@@ -46,6 +46,16 @@ final class UserTable extends BaseConnection
         $row = $res->fetch();
         return $row && password_verify($password, $row->password);
     }
+    public function check_hash(string $email, string $hash): bool
+    {
+        $res = $this->conn->prepare(
+            'SELECT password FROM users WHERE email = ?',
+        );
+        $res->bindParam(1, $email);
+        $res->execute();
+        $row = $res->fetch();
+        return $row && hash_equals($row->password, $hash);
+    }
     public function check_email(string $email): bool
     {
         $res = $this->conn->prepare(

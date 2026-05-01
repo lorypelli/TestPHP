@@ -27,7 +27,7 @@ if (!$exists) {
 }
 $email = $cookies->get('email');
 $password = $cookies->get('password');
-$is_logged = $email && $password && $users->check_email($email);
+$is_logged = $email && $password && $users->check_hash($email, $password);
 if (!$is_logged && ($email || $password)) {
     $cookies->remove('email');
     $cookies->remove('password');
