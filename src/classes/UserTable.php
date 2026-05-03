@@ -9,16 +9,16 @@ final class UserTable extends BaseConnection
         parent::__construct();
         $this->conn->query(
             sprintf(
-                "CREATE TABLE IF NOT EXISTS users (
+                'CREATE TABLE IF NOT EXISTS users (
                     id UUID PRIMARY KEY DEFAULT uuidv7(),
                     email VARCHAR(%d) UNIQUE NOT NULL,
                     password VARCHAR(%d) NOT NULL,
                     username VARCHAR(%d) NOT NULL,
-                    avatar TEXT NOT NULL DEFAULT '',
+                    avatar TEXT NOT NULL DEFAULT \'\',
                     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
                     verified_at TIMESTAMPTZ DEFAULT NULL,
-                    verification_code VARCHAR(%d) NOT NULL DEFAULT ''
-                )",
+                    verification_code VARCHAR(%d) NOT NULL DEFAULT \'\'
+                )',
                 Constants::MAX_EMAIL_LENGTH,
                 Constants::MAX_PASSWORD_LENGTH,
                 Constants::MAX_NAME_LENGTH,

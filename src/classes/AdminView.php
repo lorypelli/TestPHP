@@ -7,12 +7,12 @@ final class AdminView extends BaseConnection
     {
         parent::__construct();
         $this->conn->query(
-            "CREATE MATERIALIZED VIEW IF NOT EXISTS admin AS (
+            'CREATE MATERIALIZED VIEW IF NOT EXISTS admin AS (
                 SELECT u.email, u.username, u.verified_at IS NOT NULL AS is_verified, t.name, t.description, t.is_done
                 FROM users AS u
                 JOIN todos AS t
                 ON u.id = t.user_id
-            ) WITH NO DATA",
+            ) WITH NO DATA',
         );
         $this->conn->query('REFRESH MATERIALIZED VIEW admin');
     }

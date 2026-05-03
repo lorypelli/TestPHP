@@ -9,14 +9,14 @@ final class TodoTable extends BaseConnection
         parent::__construct();
         $this->conn->query(
             sprintf(
-                "CREATE TABLE IF NOT EXISTS todos (
+                'CREATE TABLE IF NOT EXISTS todos (
                     id UUID PRIMARY KEY DEFAULT uuidv7(),
                     user_id UUID NOT NULL,
                     name VARCHAR(%d) UNIQUE NOT NULL,
                     description VARCHAR(%d) NOT NULL,
                     is_done BOOLEAN NOT NULL DEFAULT FALSE,
                     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-                )",
+                )',
                 Constants::MAX_NAME_LENGTH,
                 Constants::MAX_DESCRIPTION_LENGTH,
             ),

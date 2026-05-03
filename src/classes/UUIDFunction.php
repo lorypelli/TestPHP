@@ -6,7 +6,7 @@ final class UUIDFunction extends BaseConnection
     {
         parent::__construct();
         $this->conn->query(
-            "CREATE OR REPLACE FUNCTION uuidv7(TIMESTAMPTZ DEFAULT clock_timestamp()) RETURNS UUID
+            'CREATE OR REPLACE FUNCTION uuidv7(TIMESTAMPTZ DEFAULT clock_timestamp()) RETURNS UUID
             AS $$
                 SELECT encode(
                     set_bit(
@@ -15,8 +15,8 @@ final class UUIDFunction extends BaseConnection
                                 SUBSTRING(int8send((EXTRACT(EPOCH FROM $1) * 1000)::BIGINT) FROM 3)
                             FROM 1 FOR 6),
                         52, 1),
-                    53, 1), 'hex')::UUID
-            $$ LANGUAGE SQL VOLATILE PARALLEL SAFE",
+                    53, 1), \'hex\')::UUID
+            $$ LANGUAGE SQL VOLATILE PARALLEL SAFE',
         );
     }
 }
