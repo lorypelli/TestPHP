@@ -10,7 +10,7 @@ final class TodoTable extends BaseConnection
         $this->conn->query(
             sprintf(
                 "CREATE TABLE IF NOT EXISTS todos (
-                    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                    id UUID PRIMARY KEY DEFAULT uuidv7(),
                     user_id UUID NOT NULL,
                     name VARCHAR(%d) UNIQUE NOT NULL,
                     description VARCHAR(%d) NOT NULL,

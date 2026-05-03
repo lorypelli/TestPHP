@@ -10,7 +10,7 @@ final class UserTable extends BaseConnection
         $this->conn->query(
             sprintf(
                 "CREATE TABLE IF NOT EXISTS users (
-                    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                    id UUID PRIMARY KEY DEFAULT uuidv7(),
                     email VARCHAR(%d) UNIQUE NOT NULL,
                     password VARCHAR(%d) NOT NULL,
                     username VARCHAR(%d) NOT NULL,
