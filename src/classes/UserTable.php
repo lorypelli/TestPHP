@@ -202,8 +202,18 @@ final class UserTable extends BaseConnection
     }
     public function delete(string $email): void
     {
-        $res = $this->conn->prepare('DELETE FROM users WHERE email = ?');
-        $res->bindParam(1, $email);
-        $res->execute();
+        try {
+            $this->conn->beginTransaction();
+            $id = $this->get_id($email);
+            $res = $this->conn->prepare('DELETE FROM todos WHERE user_id = ?');
+            $res->bindParam(1, $id);
+            $res->execute();
+            $res = $this->conn->prepare('DELETE FROM users WHERE email = ?');
+            $res->bindParam(1, $email);
+            $res->execute();
+            $this->conn->commit();
+        } catch (Exception) {
+            $this->conn->rollBack();
+        }
     }
 }
