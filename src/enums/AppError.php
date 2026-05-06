@@ -16,6 +16,7 @@ enum AppError: string
     case TODO_ALREADY_EXISTS = 'A todo with that name already exists in your account';
     case TODO_NAME_TOO_LONG = 'The todo name is too long';
     case TODO_DESCRIPTION_TOO_LONG = 'The todo description is too long';
+    case DELETE_FAILED = 'Failed to delete the account';
 }
 
 return array_combine(

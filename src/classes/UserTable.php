@@ -214,6 +214,7 @@ final class UserTable extends BaseConnection
             $this->conn->commit();
         } catch (Exception) {
             $this->conn->rollBack();
+            throw new Exception(AppError::DELETE_FAILED->value);
         }
     }
 }

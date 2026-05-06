@@ -9,6 +9,12 @@ if (!$users->check($email, $password)) {
     redirect('/delete?skip-confirmation');
     exit(1);
 }
-$users->delete($email);
-session_destroy();
-redirect('/api/logout', 307);
+try {
+    $users->delete($email);
+    session_destroy();
+    redirect('/api/logout', 307);
+} catch (Exception) {
+    $_SESSION['error'] = 'delete_failed';
+    redirect('/delete?skip-confirmation');
+    exit(1);
+}
