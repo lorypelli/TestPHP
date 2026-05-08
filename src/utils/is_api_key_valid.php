@@ -1,7 +1,7 @@
 <?php
 function is_api_key_valid(bool $do_test = false): bool
 {
-    global $resend, $is_valid_email;
+    global $resend;
     $email = $_ENV['EMAIL'] ?? '';
     $api_key = $_ENV['APIKEY'] ?? '';
     if (!$email || !$api_key) {
@@ -15,11 +15,10 @@ function is_api_key_valid(bool $do_test = false): bool
                 'subject' => 'Test',
                 'text' => 'Test',
             ]);
-            $is_valid_email = true;
+            return true;
         } catch (Exception) {
-            $is_valid_email = false;
+            return false;
         }
-        return $is_valid_email;
     }
     return true;
 }
