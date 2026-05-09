@@ -20,8 +20,10 @@ if (!hash_equals($server_code, $user_code)) {
     exit(1);
 }
 match ($type) {
-    'register' => (function () use ($email): void {
-        global $users;
+    'register' => (function () use ($users, $email): void {
+        /**
+         * @var UserTable $users
+         */
         $now = new DateTimeImmutable();
         $created_at = $users->get_created_at($email);
         if ($now->getTimestamp() - $created_at->getTimestamp() < 15 * 60) {
