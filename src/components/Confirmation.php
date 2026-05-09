@@ -1,22 +1,17 @@
 <?php
 require_once sprintf('%s/src/enums/Type.php', $root);
-$is_logout = $type == Type::Logout;
-$is_delete = $type == Type::Delete;
-$is_reset = $type == Type::Reset;
-$action = 'remove';
 $actions = [
     'remove' => 'remove the todo',
     'logout' => 'logout',
     'delete' => 'delete your account',
     'default' => 'reset your avatar to the default one',
 ];
-if ($is_logout) {
-    $action = 'logout';
-} elseif ($is_delete) {
-    $action = 'delete';
-} elseif ($is_reset) {
-    $action = 'default';
-}
+$action = match ($type) {
+    Type::Logout => 'logout',
+    Type::Delete => 'delete',
+    Type::Reset => 'default',
+    Type::Remove => 'remove',
+};
 ?>
 <form method="POST" class="flex flex-col justify-center items-center gap-y-1 h-screen" action="<?= sprintf(
     '/api/%s',
