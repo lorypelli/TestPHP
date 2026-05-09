@@ -44,11 +44,11 @@ touch "$FILE_PATH"
 
 start_spinner &
 
-PID=$!
+PID="$!"
 
 htpasswd -bBC 16 "$FILE_PATH" "$username" "$password" &> /dev/null
 
-EXIT=$?
+EXIT="$?"
 
 kill "$PID"
 wait "$PID"
