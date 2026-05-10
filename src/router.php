@@ -27,8 +27,8 @@ if (!$exists) {
     require_once sprintf('%s/src/errors/index.php', $root);
     exit(1);
 }
-$email = $cookies->get('email');
-$password = $cookies->get('password');
+$email = $cookies->get('email', '');
+$password = $cookies->get('password', '');
 $is_logged = $email && $password && $users->check_hash($email, $password);
 if (!$is_logged && ($email || $password)) {
     $cookies->remove('email');
