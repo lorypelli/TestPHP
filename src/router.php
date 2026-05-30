@@ -55,45 +55,40 @@ if (!$is_api) {
 require_once sprintf('%s/src/utils/buffer.php', $root);
 ob_start(buffer(...));
 ?>
-<?php if (!$is_api): ?>
-    <!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+<?php include_once sprintf('%s/src/components/Header.php', $root); ?>
 
-    <?php include_once sprintf('%s/src/components/Header.php', $root); ?>
-
-    <body class="flex flex-col h-screen">
-        <nav class="flex justify-between p-2">
-            <a href="/">
-                <button class="p-1 border-2 rounded-md cursor-pointer">Home!</button>
-            </a>
-            <div class="flex items-center gap-x-1 p-3 border-2 rounded-md">
-                <?php if (!$is_logged): ?>
-                    <a href="/login">
-                        <button class="p-1 border-2 rounded-md cursor-pointer">Login!</button>
-                    </a>
-                    <a href="/register">
-                        <button class="p-1 border-2 rounded-md cursor-pointer">Register!</button>
-                    </a>
-                <?php else: ?>
-                    <img src="/avatar" loading="lazy" decoding="async" class="rounded-full size-10" />
-                    <span><?= htmlspecialchars(
-                        $users->get_username($email),
-                    ) ?></span>
-                    <a href="/settings">
-                        <button class="p-1 border-2 rounded-md cursor-pointer">Settings!</button>
-                    </a>
-                    <a href="/logout">
-                        <button class="p-1 border-2 rounded-md cursor-pointer">Logout!</button>
-                    </a>
-                <?php endif; ?>
-            </div>
-        </nav>
-        <?php require_once sprintf('%s/%s', $root, $path); ?>
-    </body>
-
-    </html>
-    <?php unset($_SESSION['error']); ?>
-<?php else: ?>
+<body class="flex flex-col h-screen">
+    <nav class="flex justify-between p-2">
+        <a href="/">
+            <button class="p-1 border-2 rounded-md cursor-pointer">Home!</button>
+        </a>
+        <div class="flex items-center gap-x-1 p-3 border-2 rounded-md">
+            <?php if (!$is_logged): ?>
+                <a href="/login">
+                    <button class="p-1 border-2 rounded-md cursor-pointer">Login!</button>
+                </a>
+                <a href="/register">
+                    <button class="p-1 border-2 rounded-md cursor-pointer">Register!</button>
+                </a>
+            <?php else: ?>
+                <img src="/avatar" loading="lazy" decoding="async" class="rounded-full size-10" />
+                <span><?= htmlspecialchars(
+                    $users->get_username($email),
+                ) ?></span>
+                <a href="/settings">
+                    <button class="p-1 border-2 rounded-md cursor-pointer">Settings!</button>
+                </a>
+                <a href="/logout">
+                    <button class="p-1 border-2 rounded-md cursor-pointer">Logout!</button>
+                </a>
+            <?php endif; ?>
+        </div>
+    </nav>
     <?php require_once sprintf('%s/%s', $root, $path); ?>
-<?php endif; ?>
+</body>
+
+</html>
+<?php unset($_SESSION['error']); ?>
 <?php ob_end_flush(); ?>
