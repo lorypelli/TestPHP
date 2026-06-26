@@ -56,14 +56,8 @@ func main() {
 						res.CopyTo(&ctx.Response)
 						return
 					}
-					ctx.Redirect("/login", fasthttp.StatusFound)
-					return
 				}
-				ctx.Redirect("/login", fasthttp.StatusFound)
-				return
 			}
-			ctx.Redirect("/login", fasthttp.StatusFound)
-			return
 		}
 		ctx.Redirect("/login", fasthttp.StatusFound)
 	}
