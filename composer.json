@@ -1,7 +1,7 @@
 {
     "require": {
         "php": "8.4.5",
-        "guzzlehttp/guzzle": "^7.10",
+        "guzzlehttp/guzzle": "^7.12",
         "josantonius/cookie": "^2.0",
         "ramsey/uuid": "^4.9",
         "resend/resend-php": "^1.3",

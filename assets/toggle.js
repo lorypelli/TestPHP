@@ -1,3 +1,4 @@
+/// <reference path="svg.ts" />
 const passwords = document.querySelectorAll('div[data-pwd]');
 const svgs = document.querySelectorAll('div[data-svg]');
 let visible = false;
