@@ -50,12 +50,13 @@ final class TodoTable extends BaseConnection
         $exists = $res->fetchColumn();
         return $exists;
     }
-    public function check_name(string $name): bool
+    public function check_name(string $user_id, string $name): bool
     {
         $res = $this->conn->prepare(
-            'SELECT EXISTS(SELECT 1 FROM todos WHERE name = ?)',
+            'SELECT EXISTS(SELECT 1 FROM todos WHERE user_id = ? AND name = ?)',
         );
-        $res->bindParam(1, $name);
+        $res->bindParam(1, $user_id);
+        $res->bindParam(2, $name);
         $res->execute();
         $exists = $res->fetchColumn();
         return $exists;

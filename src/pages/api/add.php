@@ -1,6 +1,6 @@
 <?php
 $name = $_POST['name'] ?? '';
-if ($todos->check_name($name)) {
+if ($todos->check_name($users->get_id($email), $name)) {
     $_SESSION['error'] = 'todo_already_exists';
     redirect('/');
     exit(1);

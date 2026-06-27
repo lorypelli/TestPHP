@@ -9,8 +9,11 @@ function send_email(string $email, string $code, string $action): void
     $text = sprintf('Your verification code is: %s', $code);
     if ($is_register) {
         $text .= sprintf(', you have 15 minutes to use it before it expires!');
-        $user_id = $users->get_id($email);
-        $options = ['id' => $user_id, 'email' => $email, 'code' => $code];
+        $options = [
+            'id' => $users->get_id($email),
+            'email' => $email,
+            'code' => $code,
+        ];
         $encoded = base64_encode(json_encode($options));
         $text .= sprintf(
             "\nYou can also use the following URL to automatically verify:\nhttp://%s/verify/%s",

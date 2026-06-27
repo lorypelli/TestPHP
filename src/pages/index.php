@@ -2,7 +2,7 @@
 require_once sprintf('%s/src/utils/when.php', $root);
 $messages = require_once sprintf('%s/src/enums/AppError.php', $root);
 $error = $_SESSION['error'] ?? '';
-$user_id = $email ? $users->get_id($email) : '';
+$user_id = $users->get_id($email);
 ?>
 <?php if (!$is_logged): ?>
     <div class="flex flex-col justify-center h-screen text-center">
