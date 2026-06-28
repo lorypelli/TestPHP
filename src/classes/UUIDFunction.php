@@ -5,7 +5,7 @@ final class UUIDFunction extends BaseConnection
     public function __construct()
     {
         parent::__construct();
-        $this->conn->query(
+        $this->conn->exec(
             'CREATE OR REPLACE FUNCTION uuidv7(TIMESTAMPTZ DEFAULT clock_timestamp()) RETURNS UUID
             AS $$
                 SELECT encode(

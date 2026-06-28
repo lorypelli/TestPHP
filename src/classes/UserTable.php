@@ -7,7 +7,7 @@ final class UserTable extends BaseConnection
     public function __construct()
     {
         parent::__construct();
-        $this->conn->query(
+        $this->conn->exec(
             sprintf(
                 'CREATE TABLE IF NOT EXISTS users (
                     id UUID PRIMARY KEY DEFAULT uuidv7(),
