@@ -12,9 +12,10 @@ final class TodoTable extends BaseConnection
                 'CREATE TABLE IF NOT EXISTS todos (
                     id UUID PRIMARY KEY DEFAULT uuidv7(),
                     user_id UUID NOT NULL REFERENCES users(id),
-                    name VARCHAR(%d) UNIQUE NOT NULL,
+                    name VARCHAR(%d) NOT NULL,
                     description VARCHAR(%d) NOT NULL,
-                    is_done BOOLEAN NOT NULL DEFAULT FALSE
+                    is_done BOOLEAN NOT NULL DEFAULT FALSE,
+                    UNIQUE (user_id, name)
                 )',
                 Constants::MAX_NAME_LENGTH,
                 Constants::MAX_DESCRIPTION_LENGTH,
