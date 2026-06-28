@@ -15,6 +15,7 @@ final class TodoTable extends BaseConnection
                     name VARCHAR(%d) NOT NULL,
                     description VARCHAR(%d) NOT NULL,
                     is_done BOOLEAN NOT NULL DEFAULT FALSE,
+                    is_shared BOOLEAN NOT NULL DEFAULT FALSE,
                     UNIQUE (user_id, name)
                 )',
                 Constants::MAX_NAME_LENGTH,
