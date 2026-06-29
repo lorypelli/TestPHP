@@ -1,13 +1,11 @@
 import { context } from 'esbuild';
-import { copyFile, mkdir } from 'node:fs/promises';
+import { copyFile, mkdir, watch } from 'node:fs/promises';
 import { basename } from 'node:path';
 import { glob } from 'tinyglobby';
 
 const files = await glob('assets/*.{js,css}', {
     ignore: 'assets/*.min.{js,css}',
 });
-
-const other = await glob('assets/*', { ignore: files });
 
 await mkdir('public', { recursive: true });
 
@@ -23,6 +21,10 @@ const ctx = await context({
 });
 await ctx.watch();
 
-await Promise.all(
-    other.map(async (o) => await copyFile(o, `public/${basename(o)}`)),
-);
+const watcher = watch('assets/', { recursive: true });
+for await (const _ of watcher) {
+    const other = await glob('assets/*', { ignore: ['assets/*.ts', ...files] });
+    await Promise.all(
+        other.map(async (o) => await copyFile(o, `public/${basename(o)}`)),
+    );
+}
