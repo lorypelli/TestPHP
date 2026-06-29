@@ -7,11 +7,8 @@ backend default {
 sub vcl_backend_response {
     unset beresp.http.Pragma;
     unset beresp.http.Expires;
-    if (bereq.http.Host ~ "localhost") {
-        set beresp.ttl = 0m;
-    } else {
-        set beresp.ttl = 15m;
-    }
+    set beresp.ttl = 15m;
+    set beresp.grace = 75m;
 }
 
 sub vcl_recv {

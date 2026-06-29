@@ -20,6 +20,11 @@
         path *.css *.js *.png *.ico
     }
 
+    @exists {
+        file /public/{path}
+        not query t=*
+    }
+
     @not_found {
         not path /
         not path_regexp ^/[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$
@@ -48,6 +53,7 @@
     }
 
     handle @static_files {
+        redir @exists {path}?t={time.now.unix} 302
         try_files /public/{path} /src/errors/index.php?code=404
     }
 
