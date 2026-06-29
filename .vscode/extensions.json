@@ -1,3 +1,11 @@
 {
-    "recommendations": ["formulahendry.code-runner"]
+    "recommendations": [
+        "dbcode.dbcode",
+        "matthewpi.caddyfile-support",
+        "formulahendry.code-runner",
+        "golang.go",
+        "ms-vscode.makefile-tools",
+        "william-voyek.vscode-nginx",
+        "DEVSENSE.phptools-vscode"
+    ]
 }
