@@ -1,5 +1,8 @@
 import isDocker from 'is-docker';
-import { exec } from 'node:child_process';
+import { exec as _ } from 'node:child_process';
+import { promisify } from 'node:util';
+
+const exec = promisify(_);
 
 if (!isDocker()) {
     console.log(
@@ -12,7 +15,7 @@ if (!isDocker()) {
 exec('node esbuild.config.js');
 
 exec(
-    'pnpm tailwindcss -i ./src/styles/global.css -o ./assets/global.min.css -m -w',
+    'pnpm tailwindcss -i ./src/styles/global.css -o ./assets/global.min.css -m -w always',
 );
 
 console.log('\x1b[1;32m[SUCCESS]\x1b[0m Running...!');
