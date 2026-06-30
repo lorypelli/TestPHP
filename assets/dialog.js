@@ -61,7 +61,7 @@ function closeDialog() {
     form.removeAttribute('action');
     if (form.contains(todo_id)) {
         form.removeChild(todo_id);
-        history.replaceState(null, '', '/');
+        history.pushState(null, '', '/');
     }
     document.addEventListener(
         'animationend',
