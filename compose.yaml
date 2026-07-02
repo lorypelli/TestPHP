@@ -25,7 +25,6 @@ services:
             - ./src:/app/src:ro
             - ./assets:/app/assets
             - ./public:/app/public
-            - ./node_modules:/app/node_modules
         command: sh -c "pnpm i && pnpm dev"
     composer:
         container_name: composer
@@ -69,7 +68,7 @@ services:
             - ./golang/src/main.go:/app/src/main.go:ro
         depends_on:
             - php
-        command: sh -c "go get ./... && go run src/main.go"
+        command: sh -c "go mod tidy && go run src/main.go"
     nginx:
         container_name: nginx
         restart: always
