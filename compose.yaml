@@ -17,8 +17,8 @@ services:
         restart: always
         working_dir: /app
         volumes:
-            - ./package.json:/app/package.json:ro
-            - ./pnpm-lock.yaml:/app/pnpm-lock.yaml:ro
+            - ./package.json:/app/package.json
+            - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
             - ./.env:/app/.env:ro
             - ./esbuild.config.js:/app/esbuild.config.js:ro
             - ./run.js:/app/run.js:ro
@@ -32,8 +32,8 @@ services:
         restart: on-failure
         working_dir: /app
         volumes:
-            - ./composer.json:/app/composer.json:ro
-            - ./composer.lock:/app/composer.lock:ro
+            - ./composer.json:/app/composer.json
+            - ./composer.lock:/app/composer.lock
             - ./vendor:/app/vendor
         command: sh -c "composer i"
     php:

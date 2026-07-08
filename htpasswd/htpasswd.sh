@@ -41,7 +41,6 @@ if [[ "$password" != "$verification_password" ]]; then
 fi
 
 touch "$FILE_PATH"
-
 start_spinner &
 
 PID="$!"
@@ -52,7 +51,6 @@ EXIT="$?"
 
 kill "$PID"
 wait "$PID"
-
 printf "\n"
 
 if [[ "$EXIT" -ne 0 ]]; then

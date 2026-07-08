@@ -1,5 +1,6 @@
 import { context } from 'esbuild';
-import { copyFile, mkdir } from 'node:fs/promises';
+import { copy } from 'esbuild-plugin-copy';
+import { mkdir } from 'node:fs/promises';
 import { basename } from 'node:path';
 import { glob } from 'tinyglobby';
 
@@ -7,7 +8,7 @@ const files = await glob('assets/*.{js,css}', {
     ignore: 'assets/*.min.{js,css}',
 });
 
-const other = await glob('assets/*', { ignore: files });
+const other = await glob('assets/*', { ignore: ['assets/*.ts', ...files] });
 
 await mkdir('public', { recursive: true });
 
@@ -20,9 +21,15 @@ const ctx = await context({
     },
     minify: true,
     allowOverwrite: true,
+    plugins: [
+        copy({
+            resolveFrom: 'cwd',
+            assets: other.map((o) => ({
+                from: o,
+                to: `public/${basename(o)}`,
+            })),
+            watch: true,
+        }),
+    ],
 });
 await ctx.watch();
-
-await Promise.all(
-    other.map(async (o) => await copyFile(o, `public/${basename(o)}`)),
-);

@@ -1,7 +1,8 @@
 import isDocker from 'is-docker';
-import { exec } from 'node:child_process';
-import { access } from 'node:fs/promises';
-import { setTimeout } from 'node:timers/promises';
+import { exec as _ } from 'node:child_process';
+import { promisify } from 'node:util';
+
+const exec = promisify(_);
 
 if (!isDocker()) {
     console.log(
@@ -11,19 +12,10 @@ if (!isDocker()) {
     process.exit(1);
 }
 
+exec('node esbuild.config.js');
+
 exec(
     'pnpm tailwindcss -i ./src/styles/global.css -o ./assets/global.min.css -m -w always',
 );
-
-while (true) {
-    try {
-        await access('assets/global.min.css');
-        break;
-    } catch {
-        await setTimeout(500);
-    }
-}
-
-exec('node esbuild.config.js');
 
 console.log('\x1b[1;32m[SUCCESS]\x1b[0m Running...!');
