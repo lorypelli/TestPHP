@@ -8,7 +8,7 @@ const files = await glob('assets/*.{js,css}', {
     ignore: 'assets/*.min.{js,css}',
 });
 
-const other = await glob('assets/*', { ignore: ['assets/*.ts', ...files] });
+const other = async () => await glob('assets/*', { ignore: ['assets/*.ts', ...files] });
 
 await mkdir('public', { recursive: true });
 
@@ -24,7 +24,7 @@ const ctx = await context({
     plugins: [
         copy({
             resolveFrom: 'cwd',
-            assets: other.map((o) => ({
+            assets: (await other()).map((o) => ({
                 from: o,
                 to: `public/${basename(o)}`,
             })),
