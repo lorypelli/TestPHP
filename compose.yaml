@@ -1,8 +1,7 @@
 services:
     postgres:
-        container_name: postgres
         image: postgres:16.8-alpine
-        restart: always
+        user: root
         ports:
             - 5432:5432
         volumes:
@@ -12,9 +11,8 @@ services:
             POSTGRES_USER: ${PGUSER}
             POSTGRES_PASSWORD: ${PGPASSWORD}
     pnpm:
-        container_name: pnpm
         image: gplane/pnpm:10.6.5-alpine
-        restart: always
+        user: root
         working_dir: /app
         volumes:
             - ./package.json:/app/package.json
@@ -27,21 +25,19 @@ services:
             - ./public:/app/public
         command: sh -c "pnpm i && pnpm dev"
     composer:
-        container_name: composer
         image: composer:2.8.7
-        restart: on-failure
+        user: root
         working_dir: /app
         volumes:
             - ./composer.json:/app/composer.json
             - ./composer.lock:/app/composer.lock
             - ./vendor:/app/vendor
-        command: sh -c "composer i"
+        command: sh -c "composer i && exit 1"
     php:
-        container_name: php
-        restart: always
+        user: root
         build:
-            context: .
-            dockerfile: php/Dockerfile
+            context: php/
+            dockerfile: Dockerfile
         working_dir: /app
         volumes:
             - ./public:/app/public:ro
@@ -58,9 +54,8 @@ services:
             - pnpm
             - composer
     golang:
-        container_name: golang
         image: golang:1.23.10-alpine3.21
-        restart: always
+        user: root
         working_dir: /app
         volumes:
             - ./go.mod:/app/go.mod:ro
@@ -70,20 +65,18 @@ services:
             - php
         command: sh -c "go get ./... && go run src/main.go"
     nginx:
-        container_name: nginx
-        restart: always
+        user: root
         build:
-            context: .
-            dockerfile: nginx/Dockerfile
+            context: nginx/
+            dockerfile: Dockerfile
         volumes:
             - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-            - ./htpasswd/.htpasswd:/etc/nginx/.htpasswd
+            - ./nginx/.htpasswd:/etc/nginx/.htpasswd
         depends_on:
             - php
     varnish:
-        container_name: varnish
         image: varnish:7.7.0-alpine
-        restart: always
+        user: root
         ports:
             - 63342:80
         volumes:
@@ -91,9 +84,8 @@ services:
         depends_on:
             - php
     pgadmin:
-        container_name: pgadmin
         image: dpage/pgadmin4:9.4.0
-        restart: always
+        user: root
         volumes:
             - pgadmin:/var/lib/pgadmin
             - ./pgadmin/config.py:/pgadmin4/config_local.py

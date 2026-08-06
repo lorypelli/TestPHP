@@ -1,12 +1,12 @@
-import isDocker from 'is-docker';
+import { inContainer } from 'in-container';
 import { exec as _ } from 'node:child_process';
 import { promisify } from 'node:util';
 
 const exec = promisify(_);
 
-if (!isDocker()) {
+if (!(await inContainer())) {
     console.log(
-        '\x1b[1;31m[ERROR]\x1b[0m You need to run this script from docker!',
+        '\x1b[1;31m[ERROR]\x1b[0m You need to run this script from a container!',
     );
     console.log('\x1b[1;34m[INFO]\x1b[0m Run the "make" command instead!');
     process.exit(1);

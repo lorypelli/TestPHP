@@ -1,16 +1,18 @@
 .PHONY: all start down setup up htpasswd composer
+RUNTIMES := docker podman
+CMD := $(firstword $(foreach r,$(RUNTIMES),$(if $(shell $(r) --version),$(r))))
 all: start down setup up htpasswd
 start:
-	@docker desktop start || exit 0
+	@$(CMD) desktop start || exit 0
 down:
-	@docker compose down
+	@$(CMD) compose down
 setup:
 	@python3 setup.py
 up:
-	@docker compose up -d
+	@$(CMD) compose up -d
 htpasswd:
-	@docker exec -it nginx "./htpasswd.sh"
+	@$(CMD) compose run --rm nginx ./htpasswd.sh
 composer:
-	@docker compose run --rm composer composer $(filter-out $@,$(MAKECMDGOALS))
+	@$(CMD) compose run --rm composer composer $(filter-out $@,$(MAKECMDGOALS))
 %:
 	@:

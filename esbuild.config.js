@@ -8,7 +8,8 @@ const files = await glob('assets/*.{js,css}', {
     ignore: 'assets/*.min.{js,css}',
 });
 
-const other = async () => await glob('assets/*', { ignore: ['assets/*.ts', ...files] });
+const other = async () =>
+    await glob('assets/*', { ignore: ['assets/*.ts', ...files] });
 
 await mkdir('public', { recursive: true });
 

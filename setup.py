@@ -2,8 +2,8 @@ from pathlib import Path
 
 src = Path('./.env.example')
 dest = Path('./.env')
-htpasswd = Path('./htpasswd/.htpasswd')
-htpasswdsh = Path('./htpasswd/htpasswd.sh')
+htpasswd = Path('./nginx/.htpasswd')
+htpasswdsh = Path('./nginx/htpasswd.sh')
 
 if not(src.exists()) or not(htpasswdsh.exists()):
     print('\x1b[1;31m[ERROR]\x1b[0m Missing required files!')
