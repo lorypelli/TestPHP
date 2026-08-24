@@ -1,5 +1,6 @@
 services:
     postgres:
+        container_name: postgres
         image: postgres:16.8-alpine
         user: root
         ports:
@@ -11,6 +12,7 @@ services:
             POSTGRES_USER: ${PGUSER}
             POSTGRES_PASSWORD: ${PGPASSWORD}
     pnpm:
+        container_name: pnpm
         image: gplane/pnpm:10.6.5-alpine
         user: root
         working_dir: /app
@@ -25,6 +27,7 @@ services:
             - ./public:/app/public
         command: sh -c "pnpm i && pnpm dev"
     composer:
+        container_name: composer
         image: composer:2.8.7
         user: root
         working_dir: /app
@@ -34,6 +37,7 @@ services:
             - ./vendor:/app/vendor
         command: sh -c "composer i && exit 1"
     php:
+        container_name: php
         user: root
         build:
             context: php/
@@ -54,6 +58,7 @@ services:
             - pnpm
             - composer
     golang:
+        container_name: golang
         image: golang:1.23.10-alpine3.21
         user: root
         working_dir: /app
@@ -65,6 +70,7 @@ services:
             - php
         command: sh -c "go get ./... && go run src/main.go"
     nginx:
+        container_name: nginx
         user: root
         build:
             context: nginx/
@@ -75,6 +81,7 @@ services:
         depends_on:
             - php
     varnish:
+        container_name: varnish
         image: varnish:7.7.0-alpine
         user: root
         ports:
@@ -84,6 +91,7 @@ services:
         depends_on:
             - php
     pgadmin:
+        container_name: pgadmin
         image: dpage/pgadmin4:9.4.0
         user: root
         volumes:
@@ -102,3 +110,6 @@ volumes:
         name: avatars
     pgadmin:
         name: pgadmin
+networks:
+    default:
+        name: app
