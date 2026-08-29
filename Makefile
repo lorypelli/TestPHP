@@ -11,7 +11,7 @@ setup:
 up:
 	@$(CMD) compose up -d
 htpasswd:
-	@$(CMD) compose run --rm nginx ./htpasswd.sh
+	@$(CMD) compose run --rm nginx bash ./htpasswd.sh
 composer:
 	@$(CMD) compose run --rm composer composer $(filter-out $@,$(MAKECMDGOALS))
 %:
