@@ -12,6 +12,9 @@ sub vcl_backend_response {
 }
 
 sub vcl_recv {
+    if (req.method == "PURGE") {
+        return (purge);
+    }
     if (req.http.X-Auth == "1") {
         unset req.http.X-Auth;
     }

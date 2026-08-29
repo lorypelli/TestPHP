@@ -1,8 +1,8 @@
 /// <reference path="svg.ts" />
 const passwords = document.querySelectorAll('div[data-pwd]');
 const svgs = document.querySelectorAll('div[data-svg]');
-let visible = false;
 passwords.forEach((pwd, i) => {
+    let visible = false;
     if (svgs[i].innerHTML.trim() == '') {
         svgs[i].innerHTML = disabledcapslock;
     }
