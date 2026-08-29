@@ -1,5 +1,5 @@
-const draggable = document.querySelector('[data-draggable]');
-const not_draggable = document.querySelector('[data-not-draggable]');
+const draggable = document.querySelector('[data-draggable="true"]');
+const not_draggable = document.querySelector('[data-draggable="false"]');
 let start_x = 0;
 let start_y = 0;
 let offset_x = 0;
