@@ -51,9 +51,8 @@ if (!$is_post) {
             <input name="digit[]" autocomplete="off" type="number" min="0" max="9" <?= $i ==
             0
                 ? 'autofocus'
-                : '' ?> required <?= $is_post
-     ? sprintf('value="%s"', $code[$i])
-     : '' ?>
+                : '' ?> required
+                <?= $is_post ? sprintf('value="%s"', $code[$i]) : '' ?>
                 class="w-12 rounded-md border-2 p-1 text-center disabled:cursor-not-allowed disabled:bg-gray-200" />
         <?php endforeach; ?>
     </div>

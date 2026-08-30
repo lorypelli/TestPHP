@@ -1,7 +1,6 @@
 import { context } from 'esbuild';
-import { copy } from 'esbuild-plugin-copy';
+import copy from 'esbuild-plugin-copy-watch';
 import { mkdir } from 'node:fs/promises';
-import { basename } from 'node:path';
 import { glob } from 'tinyglobby';
 
 const files = await glob('assets/*.{js,css}', {
@@ -24,12 +23,10 @@ const ctx = await context({
     allowOverwrite: true,
     plugins: [
         copy({
-            resolveFrom: 'cwd',
-            assets: (await other()).map((o) => ({
+            paths: (await other()).map((o) => ({
                 from: o,
-                to: `public/${basename(o)}`,
+                to: '.',
             })),
-            watch: true,
         }),
     ],
 });

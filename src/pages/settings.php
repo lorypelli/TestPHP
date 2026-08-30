@@ -2,7 +2,8 @@
 $messages = require_once sprintf('%s/src/enums/AppError.php', $root);
 $error = $_SESSION['error'] ?? '';
 ?>
-<form method="POST" enctype="multipart/form-data" class="flex h-screen flex-col items-center justify-center gap-y-1" action="/api/settings">
+<form method="POST" enctype="multipart/form-data" class="flex h-screen flex-col items-center justify-center gap-y-1"
+    action="/api/settings">
     <?php if (isset($messages[$error])): ?>
         <?php include_once sprintf('%s/src/components/Error.php', $root); ?>
     <?php endif; ?>

@@ -1,8 +1,5 @@
 import { inContainer } from 'in-container/async';
-import { exec as _ } from 'node:child_process';
-import { promisify } from 'node:util';
-
-const exec = promisify(_);
+import { spawn } from 'node:child_process';
 
 if (!(await inContainer())) {
     console.log(
@@ -12,10 +9,11 @@ if (!(await inContainer())) {
     process.exit(1);
 }
 
-exec('node esbuild.config.js');
+spawn('node esbuild.config.js', { shell: true, stdio: 'inherit' });
 
-exec(
-    'pnpm tailwindcss -i ./src/styles/global.css -o ./assets/global.min.css -m -w always',
+spawn(
+    'pnpm tailwindcss -i ./src/styles/global.css -o ./assets/global.min.css -m -w always --poll',
+    { shell: true, stdio: 'inherit' },
 );
 
 console.log('\x1b[1;32m[SUCCESS]\x1b[0m Running...!');

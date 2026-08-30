@@ -52,8 +52,8 @@ $user_id = $users->get_id($email);
                     <input name="is_done" type="checkbox"
                         class="size-7 cursor-pointer appearance-none rounded-md border-2 bg-red-600 after:flex after:justify-center after:text-white after:content-['✕'] checked:bg-blue-600 checked:after:content-['✓'] focus:outline-none" />
                     <span>Name:</span>
-                    <input data-draggable="false" name="name" autocomplete="off" maxlength="<?= Constants::MAX_NAME_LENGTH ?>"
-                        required class="w-60 rounded-md border-2 p-1" />
+                    <input data-draggable="false" name="name" autocomplete="off"
+                        maxlength="<?= Constants::MAX_NAME_LENGTH ?>" required class="w-60 rounded-md border-2 p-1" />
                     <span>Description:</span>
                     <textarea data-draggable="false" name="description" autocomplete="off"
                         maxlength="<?= Constants::MAX_DESCRIPTION_LENGTH ?>"

@@ -18,6 +18,9 @@ sub vcl_recv {
     if (req.http.X-Auth == "1") {
         unset req.http.X-Auth;
     }
+    if (req.http.Host ~ "localhost") {
+        return (pass);
+    }
     if (req.url ~ "\.(css|js|png|ico)$") {
         unset req.http.Cookie;
     }
