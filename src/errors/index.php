@@ -16,8 +16,8 @@ ob_start(buffer(...));
 
 <?php include_once sprintf('%s/src/components/Header.php', $root); ?>
 
-<body class="flex flex-col justify-center items-center h-screen">
-    <span class="font-bold text-red-600 text-4xl"><?= $code ?> - <?= $message ?>!</span>
+<body class="flex h-screen flex-col items-center justify-center">
+    <span class="text-4xl font-bold text-red-600"><?= $code ?> - <?= $message ?>!</span>
 </body>
 
 </html>

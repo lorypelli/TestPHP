@@ -1,1 +1,1 @@
-<div data-svg class="left-0 absolute p-1"></div>
+<div data-svg class="absolute left-0 p-1"></div>

@@ -59,29 +59,29 @@ ob_start(buffer(...));
 <html lang="en">
 <?php include_once sprintf('%s/src/components/Header.php', $root); ?>
 
-<body class="flex flex-col h-screen">
+<body class="flex h-screen flex-col">
     <nav class="flex justify-between p-2">
         <a href="/">
-            <button class="p-1 border-2 rounded-md cursor-pointer">Home!</button>
+            <button class="cursor-pointer rounded-md border-2 p-1">Home!</button>
         </a>
-        <div class="flex items-center gap-x-1 p-3 border-2 rounded-md">
+        <div class="flex items-center gap-x-1 rounded-md border-2 p-3">
             <?php if (!$is_logged): ?>
                 <a href="/login">
-                    <button class="p-1 border-2 rounded-md cursor-pointer">Login!</button>
+                    <button class="cursor-pointer rounded-md border-2 p-1">Login!</button>
                 </a>
                 <a href="/register">
-                    <button class="p-1 border-2 rounded-md cursor-pointer">Register!</button>
+                    <button class="cursor-pointer rounded-md border-2 p-1">Register!</button>
                 </a>
             <?php else: ?>
-                <img src="/avatar" loading="lazy" decoding="async" class="rounded-full size-10" />
+                <img src="/avatar" loading="lazy" decoding="async" class="size-10 rounded-full" />
                 <span><?= htmlspecialchars(
                     $users->get_username($email),
                 ) ?></span>
                 <a href="/settings">
-                    <button class="p-1 border-2 rounded-md cursor-pointer">Settings!</button>
+                    <button class="cursor-pointer rounded-md border-2 p-1">Settings!</button>
                 </a>
                 <a href="/logout">
-                    <button class="p-1 border-2 rounded-md cursor-pointer">Logout!</button>
+                    <button class="cursor-pointer rounded-md border-2 p-1">Logout!</button>
                 </a>
             <?php endif; ?>
         </div>

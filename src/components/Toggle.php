@@ -1,1 +1,1 @@
-<button type="button" tabindex="-1" class="absolute p-1 cursor-pointer"></button>
+<button type="button" tabindex="-1" class="absolute cursor-pointer p-1"></button>

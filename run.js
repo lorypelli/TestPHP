@@ -1,4 +1,4 @@
-import { inContainer } from 'in-container';
+import { inContainer } from 'in-container/async';
 import { exec as _ } from 'node:child_process';
 import { promisify } from 'node:util';
 

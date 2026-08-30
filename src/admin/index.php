@@ -14,7 +14,7 @@ ob_start(buffer(...));
 <?php include_once sprintf('%s/src/components/Header.php', $root); ?>
 
 <body class="flex flex-col p-2">
-    <table class="border-2 rounded-md border-separate">
+    <table class="border-separate rounded-md border-2">
         <thead>
             <th>Avatar</th>
             <th>Email</th>
@@ -30,35 +30,35 @@ ob_start(buffer(...));
                 <tr class="text-center">
                     <td>
                         <img src="/admin/avatar?email=<?= $a->get_email() ?>" loading="lazy" decoding="async"
-                            class="rounded-full size-10" />
+                            class="size-10 rounded-full" />
                     </td>
                     <td>
                         <input autocomplete="off" readonly value="<?= $a->get_email() ?>"
-                            class="focus:outline-none w-[20vw] text-center cursor-not-allowed" />
+                            class="w-[20vw] cursor-not-allowed text-center focus:outline-none" />
                     </td>
                     <td>
                         <input autocomplete="off" readonly value="<?= $a->get_username() ?>"
-                            class="focus:outline-none w-[20vw] text-center cursor-not-allowed" />
+                            class="w-[20vw] cursor-not-allowed text-center focus:outline-none" />
                     </td>
                     <td>
                         <input type="checkbox" disabled <?= when(
                             $a->get_is_verified(),
                             'checked',
-                        ) ?> class="after:flex after:justify-center bg-red-600 checked:bg-blue-600 border-2 rounded-md focus:outline-none size-7 after:text-white after:content-['✕'] checked:after:content-['✓'] appearance-none cursor-not-allowed" />
+                        ) ?> class="size-7 cursor-not-allowed appearance-none rounded-md border-2 bg-red-600 after:flex after:justify-center after:text-white after:content-['✕'] checked:bg-blue-600 checked:after:content-['✓'] focus:outline-none" />
                     </td>
                     <td>
                         <input autocomplete="off" readonly value="<?= $t->get_name() ?>"
-                            class="focus:outline-none w-[20vw] text-center cursor-not-allowed" />
+                            class="w-[20vw] cursor-not-allowed text-center focus:outline-none" />
                     </td>
                     <td>
                         <input autocomplete="off" readonly value="<?= $t->get_description() ?>"
-                            class="focus:outline-none w-[20vw] text-center cursor-not-allowed" />
+                            class="w-[20vw] cursor-not-allowed text-center focus:outline-none" />
                     </td>
                     <td>
                         <input type="checkbox" disabled <?= when(
                             $t->get_is_done(),
                             'checked',
-                        ) ?> class="after:flex after:justify-center bg-red-600 checked:bg-blue-600 border-2 rounded-md focus:outline-none size-7 after:text-white after:content-['✕'] checked:after:content-['✓'] appearance-none cursor-not-allowed" />
+                        ) ?> class="size-7 cursor-not-allowed appearance-none rounded-md border-2 bg-red-600 after:flex after:justify-center after:text-white after:content-['✕'] checked:bg-blue-600 checked:after:content-['✓'] focus:outline-none" />
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -13,17 +13,17 @@ $action = match ($type) {
     Type::Remove => 'remove',
 };
 ?>
-<form method="POST" class="flex flex-col justify-center items-center gap-y-1 h-screen" action="<?= sprintf(
+<form method="POST" class="flex h-screen flex-col items-center justify-center gap-y-1" action="<?= sprintf(
     '/api/%s',
     $action,
 ) ?>">
-    <span class="font-bold text-xl">Are you sure you want to <?= $actions[
+    <span class="text-xl font-bold">Are you sure you want to <?= $actions[
         $action
     ] ?>?</span>
     <div class="flex gap-x-1">
-        <button type="submit" class="p-1 border-2 rounded-md cursor-pointer">Yes!</button>
+        <button type="submit" class="cursor-pointer rounded-md border-2 p-1">Yes!</button>
         <a href="/">
-            <button type="button" class="p-1 border-2 rounded-md cursor-pointer">No!</button>
+            <button type="button" class="cursor-pointer rounded-md border-2 p-1">No!</button>
         </a>
     </div>
 </form>

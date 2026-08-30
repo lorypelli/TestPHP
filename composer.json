@@ -4,8 +4,8 @@
         "guzzlehttp/guzzle": "^7.15",
         "josantonius/cookie": "^2.0",
         "ramsey/uuid": "^4.9",
-        "resend/resend-php": "^1.7",
-        "vlucas/phpdotenv": "^5.6",
+        "resend/resend-php": "^1.12",
+        "vlucas/phpdotenv": "^5.7",
         "voku/html-min": "^5.0"
     },
     "config": {

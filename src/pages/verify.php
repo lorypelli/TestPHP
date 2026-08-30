@@ -29,11 +29,11 @@ if (!$is_post) {
 <?php if ($is_post): ?>
     <script>history.pushState(null, '', '/verify');</script>
 <?php endif; ?>
-<form method="POST" class="flex flex-col justify-center items-center gap-y-1 h-screen" action="/api/verify">
+<form method="POST" class="flex h-screen flex-col items-center justify-center gap-y-1" action="/api/verify">
     <?php if (isset($messages[$error])): ?>
         <?php include_once sprintf('%s/src/components/Error.php', $root); ?>
     <?php endif; ?>
-    <span data-sent class="font-bold text-xl text-center">A verification code has been sent to <?= htmlspecialchars(
+    <span data-sent class="text-center text-xl font-bold">A verification code has been sent to <?= htmlspecialchars(
         $email,
     ) ?>!</span>
     <?php if (!$is_valid_email): ?>
@@ -54,9 +54,9 @@ if (!$is_post) {
                 : '' ?> required <?= $is_post
      ? sprintf('value="%s"', $code[$i])
      : '' ?>
-                class="disabled:bg-gray-200 p-1 border-2 rounded-md w-12 text-center disabled:cursor-not-allowed" />
+                class="w-12 rounded-md border-2 p-1 text-center disabled:cursor-not-allowed disabled:bg-gray-200" />
         <?php endforeach; ?>
     </div>
-    <button type="submit" class="p-1 border-2 rounded-md cursor-pointer">Verify!</button>
+    <button type="submit" class="cursor-pointer rounded-md border-2 p-1">Verify!</button>
     <script src="/input.min.js" defer></script>
 </form>
