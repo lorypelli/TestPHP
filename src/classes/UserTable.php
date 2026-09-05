@@ -1,7 +1,6 @@
 <?php
 require_once sprintf('%s/src/classes/BaseConnection.php', $root);
 require_once sprintf('%s/src/classes/Constants.php', $root);
-require_once sprintf('%s/src/classes/User.php', $root);
 final class UserTable extends BaseConnection
 {
     public function __construct()
@@ -65,19 +64,6 @@ final class UserTable extends BaseConnection
         $res->execute();
         $exists = $res->fetchColumn();
         return $exists;
-    }
-    public function get(string $email, string $password): ?User
-    {
-        $res = $this->conn->prepare(
-            'SELECT email, password FROM users WHERE email = ?',
-        );
-        $res->bindParam(1, $email);
-        $res->execute();
-        $row = $res->fetch();
-        if ($row && password_verify($password, $row->password)) {
-            return new User($row->email, $row->password);
-        }
-        return null;
     }
     public function get_id(string $email): string
     {
@@ -177,15 +163,6 @@ final class UserTable extends BaseConnection
         $res->bindParam(2, $email);
         $res->execute();
     }
-    private function set_verified_at(string $email, string $verified_at): void
-    {
-        $res = $this->conn->prepare(
-            'UPDATE users SET verified_at = ? WHERE email = ?',
-        );
-        $res->bindParam(1, $verified_at);
-        $res->bindParam(2, $email);
-        $res->execute();
-    }
     public function set_email(string $old_email, string $email): void
     {
         $res = $this->conn->prepare(
@@ -205,6 +182,11 @@ final class UserTable extends BaseConnection
         try {
             $this->conn->beginTransaction();
             $id = $this->get_id($email);
+            $res = $this->conn->prepare(
+                'DELETE FROM sessions WHERE user_id = ?',
+            );
+            $res->bindParam(1, $id);
+            $res->execute();
             $res = $this->conn->prepare('DELETE FROM todos WHERE user_id = ?');
             $res->bindParam(1, $id);
             $res->execute();
@@ -214,7 +196,16 @@ final class UserTable extends BaseConnection
             $this->conn->commit();
         } catch (Exception) {
             $this->conn->rollBack();
-            throw new Exception(AppError::DELETE_FAILED->value);
+            throw new Exception('delete_failed');
         }
+    }
+    private function set_verified_at(string $email, string $verified_at): void
+    {
+        $res = $this->conn->prepare(
+            'UPDATE users SET verified_at = ? WHERE email = ?',
+        );
+        $res->bindParam(1, $verified_at);
+        $res->bindParam(2, $email);
+        $res->execute();
     }
 }

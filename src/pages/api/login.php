@@ -25,11 +25,8 @@ if (!$users->get_verified_at($email)) {
     redirect('/verify', 307);
     exit(0);
 }
-$user = $users->get($email, $password);
-if ($user) {
-    session_regenerate_id(true);
-    $cookies->set('email', $user->get_email());
-    $cookies->set('password', $user->get_password());
-}
+$token = bin2hex(random_bytes(32));
+$sessions->new($token, $users->get_id($email));
+$cookies->set('user_token', $token);
 session_destroy();
 redirect('/');

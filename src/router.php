@@ -6,6 +6,7 @@ require_once sprintf('%s/src/utils/redirect.php', $root);
 require_once sprintf('%s/src/classes/UUIDFunction.php', $root);
 require_once sprintf('%s/src/classes/UserTable.php', $root);
 require_once sprintf('%s/src/classes/TodoTable.php', $root);
+require_once sprintf('%s/src/classes/SessionTable.php', $root);
 require_once sprintf('%s/src/utils/is_api_key_valid.php', $root);
 $cookies = require_once sprintf('%s/src/cookies/index.php', $root);
 Dotenv\Dotenv::createImmutable($root)->load();
@@ -15,6 +16,7 @@ $file = trim($url_path, '/') ?: 'index';
 new UUIDFunction();
 $users = new UserTable();
 $todos = new TodoTable();
+$sessions = new SessionTable();
 $is_valid_todo = $todos->check($file);
 $is_valid_email = is_api_key_valid();
 if ($is_valid_todo) {
@@ -27,14 +29,14 @@ if (!$exists) {
     require_once sprintf('%s/src/errors/index.php', $root);
     exit(1);
 }
-$email = $cookies->get('email', '');
-$password = $cookies->get('password', '');
+$token = $cookies->get('user_token', '');
+$email = $sessions->get_user_email($token);
+$password = $sessions->get_user_password($token);
 $is_logged = $email && $password && $users->check_hash($email, $password);
-if (!$is_logged && ($email || $password)) {
-    $cookies->remove('email');
-    $cookies->remove('password');
-}
-if (!$is_logged && in_array($file, ['settings', 'logout', 'delete'])) {
+if (
+    !$is_logged &&
+    in_array($file, ['settings', 'logout', 'default', 'delete'])
+) {
     redirect('/');
     exit(1);
 }

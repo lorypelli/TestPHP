@@ -1,4 +1,5 @@
 <?php
-$cookies->remove('email');
-$cookies->remove('password');
+$sessions->delete($token);
+$cookies->remove('user_token');
+session_destroy();
 redirect('/');

@@ -19,5 +19,4 @@ if (strlen($password) > 72) {
 }
 $hash = password_hash($password, PASSWORD_BCRYPT);
 $users->set_password($email, $hash);
-session_destroy();
 redirect('/api/logout', 307);
